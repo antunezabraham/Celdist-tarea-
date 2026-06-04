@@ -1,5 +1,13 @@
 import streamlit as st
 import pandas as pd
+import os
+
+# Ruta automática a la carpeta de imágenes en Descargas
+ruta_imagenes = os.path.expanduser("~/Downloads/imagenes")
+
+# Verificar si la carpeta existe (solo para depuración, no afecta la ejecución)
+if not os.path.exists(ruta_imagenes):
+    st.warning(f"No se encontró la carpeta 'imagenes' en Descargas. Las imágenes no se mostrarán. Ruta esperada: {ruta_imagenes}")
 
 # 1. Configuracion de la interfaz de la plataforma
 st.set_page_config(
@@ -12,11 +20,24 @@ st.set_page_config(
 # 2. Diseno de Estilos CSS Avanzado
 st.markdown("""
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
     html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
     
-    .hero-title { font-size: 36px; font-weight: 700; color: #0F172A; text-align: center; margin-bottom: 5px; }
-    .hero-subtitle { font-size: 16px; color: #64748B; text-align: center; margin-bottom: 30px; }
+    .hero-title { 
+        font-size: 36px; 
+        font-weight: 700; 
+        color: #FFFFFF;
+        text-align: center; 
+        margin-bottom: 5px;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+    .hero-subtitle { 
+        font-size: 16px; 
+        color: #F1F5F9;
+        text-align: center; 
+        margin-bottom: 30px;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    }
     
     .product-card {
         background-color: #FFFFFF;
@@ -41,60 +62,60 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# 3. Base de Datos Simplificada (Frases cortas para evitar errores de copiado)
+# 3. Base de Datos con imágenes locales (rutas absolutas automáticas)
 catalogo_equipos = [
     {
-        "marca": "Apple", 
-        "modelo": "iPhone 15 Pro Max", 
-        "gama": "Premium", 
-        "costo": 23500, 
-        "stock": 45, 
-        "img": "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=300", 
+        "marca": "Apple",
+        "modelo": "iPhone 15 Pro Max",
+        "gama": "Premium",
+        "costo": 23500,
+        "stock": 45,
+        "img": os.path.join(ruta_imagenes, "iphone15promax.jpg"),
         "specs": "Chip A17 Pro, Titanio, Camara 48MP, Red 5G"
     },
     {
-        "marca": "Apple", 
-        "modelo": "iPhone 14", 
-        "gama": "Alta", 
-        "costo": 14200, 
-        "stock": 60, 
-        "img": "https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=300", 
+        "marca": "Apple",
+        "modelo": "iPhone 14",
+        "gama": "Alta",
+        "costo": 14200,
+        "stock": 60,
+        "img": os.path.join(ruta_imagenes, "iphone14.jpg"),
         "specs": "Chip A15 Bionic, Super Retina XDR, Doble Camara"
     },
     {
-        "marca": "Samsung", 
-        "modelo": "Galaxy S24 Ultra", 
-        "gama": "Premium", 
-        "costo": 22000, 
-        "stock": 35, 
-        "img": "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=300", 
+        "marca": "Samsung",
+        "modelo": "Galaxy S24 Ultra",
+        "gama": "Premium",
+        "costo": 22000,
+        "stock": 35,
+        "img": os.path.join(ruta_imagenes, "galaxys24ultra.jpg"),
         "specs": "Snapdragon 8 Gen 3, S-Pen, Camara 200MP, Galaxy AI"
     },
     {
-        "marca": "Samsung", 
-        "modelo": "Galaxy A55 5G", 
-        "gama": "Media", 
-        "costo": 7200, 
-        "stock": 120, 
-        "img": "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=300", 
+        "marca": "Samsung",
+        "modelo": "Galaxy A55 5G",
+        "gama": "Media",
+        "costo": 7200,
+        "stock": 120,
+        "img": os.path.join(ruta_imagenes, "galaxya55.jpg"),
         "specs": "Pantalla AMOLED 120Hz, IP67, Gran Bateria"
     },
     {
-        "marca": "Xiaomi", 
-        "modelo": "Xiaomi 14 Ultra", 
-        "gama": "Premium", 
-        "costo": 19500, 
-        "stock": 20, 
-        "img": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300", 
+        "marca": "Xiaomi",
+        "modelo": "Xiaomi 14 Ultra",
+        "gama": "Premium",
+        "costo": 19500,
+        "stock": 20,
+        "img": os.path.join(ruta_imagenes, "xiaomi14ultra.jpg"),
         "specs": "Lente Leica 1 pulgada, Carga 90W, Snapdragon Gen 3"
     },
     {
-        "marca": "Xiaomi", 
-        "modelo": "Redmi Note 13 Pro", 
-        "gama": "Media", 
-        "costo": 5400, 
-        "stock": 180, 
-        "img": "https://images.unsplash.com/photo-1565630916779-e303be97b6f5?w=300", 
+        "marca": "Xiaomi",
+        "modelo": "Redmi Note 13 Pro",
+        "gama": "Media",
+        "costo": 5400,
+        "stock": 180,
+        "img": os.path.join(ruta_imagenes, "redminote13pro.jpg"),
         "specs": "Camara 200MP con OIS, Pantalla 1.5K, Bateria 5000mAh"
     }
 ]
@@ -102,13 +123,24 @@ catalogo_equipos = [
 df_productos = pd.DataFrame(catalogo_equipos)
 
 # 4. Panel de Navegacion Lateral
-st.sidebar.markdown("<h3 style='text-align: center; color: #1E3A8A; font-weight: 700;'>CelDist Portal</h3>", unsafe_allow_html=True)
+st.sidebar.markdown("<h3 style='text-align: center; color: #FFFFFF; font-weight: 700;'>CelDist Portal</h3>", unsafe_allow_html=True)
 st.sidebar.write("---")
 
 opcion = st.sidebar.radio(
     "Seleccione una seccion:",
     ["Panel de Inicio", "Catalogo de Productos", "Control de Stock e Inventarios", "Cotizador Inteligente B2B", "Registro de Distribuidores"]
 )
+
+# ========== INFORMACIÓN DE CONTACTO ==========
+st.sidebar.write("---")
+st.sidebar.markdown("### 📍 Ubicación")
+st.sidebar.write("Av. Constituyentes 123, Playa del Carmen, Quintana Roo")
+st.sidebar.write("⏰ Lun-Vie 9:00 a 18:00 hrs")
+
+st.sidebar.markdown("### 📞 Contacto")
+st.sidebar.write("📱 WhatsApp: +52 984 123 4567")
+st.sidebar.write("✉️ [ventas@celdistportal.com](mailto:ventas@celdistportal.com)")
+# ===========================================
 
 # ==================== SECCIÓN 1: PANEL DE INICIO ====================
 if opcion == "Panel de Inicio":
@@ -145,7 +177,11 @@ elif opcion == "Catalogo de Productos":
         for idx, row in productos_filtrados.iterrows():
             col_img, col_desc = st.columns([1, 4])
             with col_img:
-                st.image(row["img"], width=130)
+                # Si la imagen no existe, muestra un placeholder
+                if os.path.exists(row["img"]):
+                    st.image(row["img"], width=130)
+                else:
+                    st.markdown('<div style="text-align: center; padding: 40px; background: #F1F5F9; border-radius: 12px;">📱<br>Sin imagen</div>', unsafe_allow_html=True)
             with col_desc:
                 st.markdown(f"""
                 <div class="product-card">
