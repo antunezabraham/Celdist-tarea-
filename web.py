@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 # Ruta automática a la carpeta de imágenes en Descargas
-ruta_imagenes = os.path.expanduser("~/Downloads/imagenes")
+ruta_imagenes = os.path.expanduser = "imagenes"
 
 # Verificar si la carpeta existe (solo para depuración, no afecta la ejecución)
 if not os.path.exists(ruta_imagenes):
